@@ -4,10 +4,28 @@ import PythonCore
 import PySwiftCore
 import PyEncode
 import PyUnpack
-
 import Foundation
 import UIKit
 
+fileprivate extension UnsafeMutablePointer<Int> {
+	init(_ value: Int) {
+		self = .allocate(capacity: 1)
+		self.pointee = value
+	}
+}
+fileprivate extension UnsafeMutablePointer<CChar> {
+	static let ubyte_format: Self = makeCString(from: "B")
+}
+
+fileprivate extension Int {
+	var stride: UnsafeMutablePointer<Int> {
+		let _stride = UnsafeMutablePointer<Int>.allocate(capacity: 1)
+		_stride.pointee = self
+		return _stride
+	}
+}
+
+fileprivate let element_size = MemoryLayout<UInt8>.size
 
 public final class UIViewPixels {
 	let data: UnsafeMutablePointer<UInt8>
@@ -46,15 +64,26 @@ extension UIViewPixels: UIViewPixels_PyProtocol {
 	// will be called when UIViewPixels object is used as arg input in texture.blit_buffer
 	static var PyBuffer: PyBufferProcs = .init(
 		bf_getbuffer: { s, buffer, rw in
+			guard let buffer = buffer else {
+				PyErr_SetString(PyExc_MemoryError, "UIViewPixels has no buffer")
+				return -1
+			}
 			let cls: UIViewPixels = UnPackPyPointer(from: s)
-			return PyBuffer_FillInfo(
-				buffer,
-				s,
-				cls.data,
-				cls.capacity,
-				0,
-				rw
-			)
+			let size = cls.capacity
+			buffer.pointee.buf = .init(cls.data)
+			
+			buffer.pointee.len = size
+			buffer.pointee.readonly = 0
+			buffer.pointee.itemsize = element_size
+			buffer.pointee.format = .ubyte_format
+			buffer.pointee.ndim = 1
+			buffer.pointee.shape = size.stride
+			buffer.pointee.strides = element_size.stride
+			
+			buffer.pointee.suboffsets = nil
+			buffer.pointee.internal = nil
+
+			return 0
 		},
 		bf_releasebuffer: nil
 	)
