@@ -2,7 +2,7 @@
 
 import PythonCore
 import PySwiftCore
-import PyEncode
+import PySerializing
 import PyUnpack
 import Foundation
 import UIKit
@@ -52,7 +52,7 @@ extension UnsafeMutablePointer where Pointee == UInt8 {
 	}
 }
 
-extension UIViewPixels: PyEncodable {
+extension UIViewPixels: PySerialize {
 	public var pyPointer: PyPointer {
 		Self.asPyPointer(self)
 	}

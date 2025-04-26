@@ -44,7 +44,7 @@ extension UIView {
 }
 
 
-extension UIView: KivyTextureProtocol {
+extension UIView: @retroactive KivyTextureProtocol {
 	public func texture() -> PyPointer {
 		let wh = layer.frame.size
 		let width = Int(wh.width * uiScale)
