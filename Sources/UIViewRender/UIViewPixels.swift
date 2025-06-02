@@ -32,8 +32,7 @@ public final class UIViewPixels {
 	let capacity: Int
 	
 	init(capacity: Int) {
-		self.data = .allocate(capacity: capacity)
-		self.data.initialize(repeating: 0, count: capacity)
+		self.data = .new(capacity)
 		self.capacity = capacity
 	}
 	

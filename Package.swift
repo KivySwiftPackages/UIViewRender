@@ -14,11 +14,11 @@ let package = Package(
     ],
 	dependencies: [
 		.package(url: "https://github.com/KivySwiftLink/PySwiftKit", .upToNextMajor(from: .init(311, 0, 0))),
-		.package(url: "https://github.com/KivySwiftLink/PythonCore", .upToNextMajor(from: .init(311, 0, 0))),
+		//.package(url: "https://github.com/KivySwiftLink/PythonCore", .upToNextMajor(from: .init(311, 0, 0))),
 		
 		.package(url: "https://github.com/KivySwiftPackages/KivyTexture", .upToNextMajor(from: .init(311, 0, 0))),
-		//.package(path: "../SwiftonizePlugin")
-		.package(url: "https://github.com/PythonSwiftLink/SwiftonizePlugin", .upToNextMajor(from: .init(0, 0, 0)))
+		.package(path: "../PySwiftWrapper")
+		//.package(url: "https://github.com/PythonSwiftLink/SwiftonizePlugin", .upToNextMajor(from: .init(0, 0, 0)))
 	],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -27,12 +27,12 @@ let package = Package(
 			name: "UIViewRender",
 			dependencies: [
 				.product(name: "SwiftonizeModules", package: "PySwiftKit"),
-				.product(name: "PythonCore", package: "PythonCore"),
+				//.product(name: "PythonCore", package: "PythonCore"),
 				
 				.product(name: "KivyTexture", package: "KivyTexture"),
 			],
 			plugins: [
-				.plugin(name: "Swiftonize", package: "SwiftonizePlugin"),
+				//.plugin(name: "Swiftonize", package: "SwiftonizePlugin"),
 			]
 		),
         .testTarget(
