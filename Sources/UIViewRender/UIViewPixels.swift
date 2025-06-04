@@ -1,9 +1,11 @@
 
 
-import PythonCore
-import PySwiftCore
+import PySwiftKit
 import PySerializing
+import PySwiftObject
+import PySwiftWrapper
 import PyUnpack
+
 import Foundation
 import UIKit
 
@@ -27,6 +29,7 @@ fileprivate extension Int {
 
 fileprivate let element_size = MemoryLayout<UInt8>.size
 
+@PyClass(bases: [.buffer])
 public final class UIViewPixels {
 	let data: UnsafeMutablePointer<UInt8>
 	let capacity: Int
@@ -58,9 +61,14 @@ extension UIViewPixels: PySerialize {
 }
 
 
-extension UIViewPixels: UIViewPixels_PyProtocol {
+extension UIViewPixels: PyTypeBufferProtocol  {
 	
-	// will be called when UIViewPixels object is used as arg input in texture.blit_buffer
+    
+    public static func buffer_procs() -> UnsafeMutablePointer<PyBufferProcs> {
+        .init(&PyBuffer)
+    }
+	// will be called when UIVi
+     //UIViewPixels object is used as arg input in texture.blit_buffer
 	static var PyBuffer: PyBufferProcs = .init(
 		bf_getbuffer: { s, buffer, rw in
 			guard let buffer = buffer else {
