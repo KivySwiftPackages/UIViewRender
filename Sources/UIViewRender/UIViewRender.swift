@@ -3,9 +3,6 @@ import PySwiftKit
 import PythonCore
 import PyUnpack
 
-import Metal
-import OpenGLES
-
 import KivyTexture
 
 let uiScale = UIScreen.main.scale

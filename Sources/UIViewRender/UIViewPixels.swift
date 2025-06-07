@@ -67,7 +67,6 @@ extension UIViewPixels: PyTypeBufferProtocol  {
     public static func buffer_procs() -> UnsafeMutablePointer<PyBufferProcs> {
         .init(&PyBuffer)
     }
-	// will be called when UIVi
      //UIViewPixels object is used as arg input in texture.blit_buffer
 	static var PyBuffer: PyBufferProcs = .init(
 		bf_getbuffer: { s, buffer, rw in
