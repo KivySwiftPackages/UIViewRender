@@ -13,7 +13,7 @@ let package = Package(
             targets: ["UIViewRender"]),
     ],
 	dependencies: [
-		.package(url: "https://github.com/kv-swift/PySwiftKit", .upToNextMajor(from: .init(311, 0, 0))),
+		.package(url: "https://github.com/py-swift/PySwiftKit", .upToNextMajor(from: .init(311, 0, 0))),
 		//.package(url: "https://github.com/KivySwiftLink/PythonCore", .upToNextMajor(from: .init(311, 0, 0))),
 		
 		.package(url: "https://github.com/KivySwiftPackages/KivyTexture", .upToNextMajor(from: .init(311, 0, 0))),
